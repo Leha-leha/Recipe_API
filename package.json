@@ -4,7 +4,7 @@
   "description": "Recipe-project-team",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon index.js"
   },
   "repository": "https://github.com/Leha-leha/Recipe_API.git",
   "author": "Mochammad_Ghali",
