@@ -5,7 +5,7 @@ const logger = require("morgan");
 const cors = require("cors");
 const mysql = require("mysql");
 
-//const mainRouter = require("./src/routes/index");
+const mainRouter = require("./src/routes/index");
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Routes
-//app.use("/", mainRouter);
+app.use("/", mainRouter);
 
 // Create connection
 const db = mysql.createConnection({
