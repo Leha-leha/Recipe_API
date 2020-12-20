@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Recipe-project-team",
   "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "repository": "https://github.com/Leha-leha/Recipe_API.git",
   "author": "Mochammad_Ghali",
   "license": "MIT",
