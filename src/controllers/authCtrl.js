@@ -1,6 +1,29 @@
 const authModel = require("../models/authModel");
 const form = require("../helpers/form");
 
+const db = require("../configs/mySQL");
+
+// const whiteListToken = (whiteListToken) => {
+//   return new Promise((resolve, reject) => {
+//     const qs = "INSERT INTO token_whitelist SET ?";
+//     db.query(qs, whiteListToken, (err, data) => {
+//       if (!err) {
+//         resolve({
+//           msg: `Login berhasil`,
+//         });
+//       } else {
+//         reject({
+//           msg: `Login tidak berhasil`,
+//         });
+//       }
+//     });
+//   });
+// };
+
+async function whiteListToken(token) {
+  await db.query("INSERT INTO token_whitelist SET token=?", token);
+}
+
 module.exports = {
   signup: (req, res) => {
     const { body } = req;
@@ -25,7 +48,8 @@ module.exports = {
 
     authModel
       .postLogin(body)
-      .then((data) => {
+      .then(async (data) => {
+        await whiteListToken(data);
         form.success(res, data);
       })
       .catch((err) => {
