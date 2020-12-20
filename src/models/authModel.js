@@ -103,3 +103,20 @@ exports.postLogin = (body) => {
     });
   });
 };
+
+exports.deleteLogout = (whitelisttoken) => {
+  return new Promise((resolve, reject) => {
+    const qs = "DELETE FROM token_whitelist WHERE token=?";
+    db.query(qs, whitelisttoken, (err, data) => {
+      if (!err) {
+        resolve({
+          msg: `Logout berhasil`,
+        });
+      } else {
+        reject({
+          msg: `Logout tidak berhasil`,
+        });
+      }
+    });
+  });
+};

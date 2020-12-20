@@ -56,4 +56,25 @@ module.exports = {
         form.error(res, err);
       });
   },
+
+  logout: (req, res) => {
+    const bearerToken = req.header("x-access-token");
+    console.log(req.headers);
+    if (!bearerToken) {
+      res.json({
+        msg: `token null!`,
+      });
+    } else {
+      const token = bearerToken.split(" ")[1];
+      console.log(token);
+      authModel
+        .deleteLogout(token)
+        .then((result) => {
+          form.success(res, result);
+        })
+        .catch((error) => {
+          form.error(res, error);
+        });
+    }
+  },
 };
