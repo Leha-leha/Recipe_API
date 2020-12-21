@@ -12,4 +12,36 @@ module.exports = {
         form.error(res, err);
       });
   },
+
+  postNewRecipeCtrl: (req, res) => {
+    const image = JSON.stringify(
+      req.files.img.map((e) => process.env.SERVER + "/images/" + e.filename)
+    );
+    const videos = JSON.stringify(
+      req.files.videos.map((e) => process.env.SERVER + "/videos/" + e.filename)
+    );
+    const { body } = req;
+    console.log(body);
+    console.log(req.files);
+    const insertBody = {
+      ...body,
+      created_at: new Date(Date.now()),
+      updated_at: new Date(Date.now()),
+      //prd_image: img,
+      img_rcp: image,
+      video_rcp: videos,
+    };
+    recipesModel
+      .postNewRecipe(req)
+      .then((data) => {
+        const resObject = {
+          msg: "Data berhasil dimasukkan",
+          data: { id: data.insertId, ...insertBody },
+        };
+        res.json(resObject);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  },
 };
