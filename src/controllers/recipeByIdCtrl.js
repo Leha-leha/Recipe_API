@@ -21,4 +21,18 @@ module.exports = {
         res.json(err);
       });
   },
+
+  deleteRecipeByIdCtrl: (req, res) => {
+    recipeByIdModel
+      .deleteRecipeById(req)
+      .then(() => {
+        form.success(res, {
+          status: "success",
+          msg: "Data berhasil dihapus",
+        });
+      })
+      .catch((err) => {
+        form.error(res, err);
+      });
+  },
 };
