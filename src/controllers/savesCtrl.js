@@ -5,7 +5,7 @@ module.exports = {
   postNewSavesCtrl: (req, res) => {
     const { body } = req;
     savesModel
-      .postNewLike(body)
+      .postNewSave(body)
       .then(() => {
         const resObject = {
           msg: "Saved recipe successful",
