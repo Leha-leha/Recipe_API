@@ -17,9 +17,11 @@ module.exports = {
     });
   },
 
-  updateRecipeByid: () => {
+  updateRecipeByid: (id, setUpdate) => {
+    console.log(setUpdate);
     return new Promise((resolve, reject) => {
-      const qs = "UPDATE products SET " + setUpdate + " WHERE prd_id = ?";
+      const qs = "UPDATE recipes SET " + setUpdate + " WHERE id_rcp = ?";
+      console.log("promise");
       console.log(qs);
       db.query(qs, id, (err, _) => {
         if (!err) {

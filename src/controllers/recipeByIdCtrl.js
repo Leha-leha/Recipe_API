@@ -23,8 +23,38 @@ module.exports = {
   },
 
   updateRecipeByIdCtrl: (req, res) => {
+    console.log(req.files);
+    const image = JSON.stringify(
+      req.files.img.map((e) => process.env.SERVER + "/images/" + e.filename)
+    );
+    const videos = JSON.stringify(
+      req.files.videos.map((e) => process.env.SERVER + "/videos/" + e.filename)
+    );
+    const { body } = req;
+    const { id } = req.params;
+
+    // set for update
+    const entries = Object.entries(body);
+    const todayDate = new Date().toISOString().slice(0, 10);
+
+    let rawSetUpdate = `updated_at = '${todayDate}', `;
+    if (req.files.img.length !== 0) {
+      console.log("true");
+      rawSetUpdate += `img_rcp = '${image}', `;
+    }
+    if (req.files.videos.length !== 0) {
+      console.log("true");
+      rawSetUpdate += `video_rcp = '${videos}', `;
+    }
+    entries.forEach((entry) => {
+      let key = entry[0];
+      let value = entry[1];
+      rawSetUpdate += `${key} = '${value}', `;
+    });
+    const setUpdate = rawSetUpdate.slice(0, -2) + " ";
+    console.log(setUpdate);
     recipeByIdModel
-      .updateRecipeByid()
+      .updateRecipeByid(id, setUpdate)
       .then(() => {
         res.status(200).json({
           status: "success",
