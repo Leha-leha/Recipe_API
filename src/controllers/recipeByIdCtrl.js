@@ -22,6 +22,22 @@ module.exports = {
       });
   },
 
+  updateRecipeByIdCtrl: (req, res) => {
+    recipeByIdModel
+      .updateRecipeByid()
+      .then(() => {
+        res.status(200).json({
+          status: "success",
+          msg: "Data berhasil diperbaharui",
+          data: body,
+          image: images,
+        });
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  },
+
   deleteRecipeByIdCtrl: (req, res) => {
     recipeByIdModel
       .deleteRecipeById(req)

@@ -1,7 +1,6 @@
 const searchRouter = require("express").Router();
 
-const searchCtrl = require("../Controllers/searchRecipes");
-
+const searchCtrl = require("../controllers/searchRecipes");
 
 searchRouter.get("/", searchCtrl.searchRecipe);
 

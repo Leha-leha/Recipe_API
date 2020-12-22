@@ -17,6 +17,20 @@ module.exports = {
     });
   },
 
+  updateRecipeByid: () => {
+    return new Promise((resolve, reject) => {
+      const qs = "UPDATE products SET " + setUpdate + " WHERE prd_id = ?";
+      console.log(qs);
+      db.query(qs, id, (err, _) => {
+        if (!err) {
+          resolve(_);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  },
+
   deleteRecipeById: (req) => {
     const { id } = req.params;
     return new Promise((resolve, reject) => {
