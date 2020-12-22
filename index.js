@@ -34,10 +34,10 @@ const db_config = {
   database: process.env.DB,
 };
 
-//var connection;
+let connection;
 
 function handleDisconnect() {
-  const connection = mysql.createConnection(db_config); // Recreate the connection, since
+  connection = mysql.createConnection(db_config); // Recreate the connection, since
   // the old one cannot be reused.
 
   connection.connect(function (err) {
@@ -51,7 +51,8 @@ function handleDisconnect() {
   // If you're also serving http, display a 503 error.
   connection.on("error", function (err) {
     console.log("db error", err);
-    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+    handleDisconnect();
+    if (err.code == `PROTOCOL_CONNECTION_LOST`) {
       // Connection to the MySQL server is usually
       handleDisconnect(); // lost due to either server restart, or a
     } else {
@@ -59,6 +60,7 @@ function handleDisconnect() {
       throw err; // server variable configures this)
     }
   });
+  console.log("db connect");
 }
 
 handleDisconnect();
