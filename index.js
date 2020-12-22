@@ -56,6 +56,8 @@ function handleDisconnect() {
       handleDisconnect(); // lost due to either server restart, or a
     } else {
       // connnection idle timeout (the wait_timeout
+      console.log("error here");
+      handleDisconnect();
       throw err; // server variable configures this)
     }
   });

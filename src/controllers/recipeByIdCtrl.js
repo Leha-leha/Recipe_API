@@ -23,13 +23,24 @@ module.exports = {
   },
 
   updateRecipeByIdCtrl: (req, res) => {
-    console.log(req.files);
-    const image = JSON.stringify(
-      req.files.img.map((e) => process.env.SERVER + "/images/" + e.filename)
-    );
-    const videos = JSON.stringify(
-      req.files.videos.map((e) => process.env.SERVER + "/videos/" + e.filename)
-    );
+    // if (req.files.length == null) {
+    //   console.log("kosong bro");
+    // }
+    let image = null;
+    let videos = null;
+    if (req.files.img) {
+      image = JSON.stringify(
+        req.files.img.map((e) => process.env.SERVER + "/images/" + e.filename)
+      );
+    }
+    if (req.files.videos) {
+      videos = JSON.stringify(
+        req.files.videos.map(
+          (e) => process.env.SERVER + "/videos/" + e.filename
+        )
+      );
+    }
+    console.log(image);
     const { body } = req;
     const { id } = req.params;
 
@@ -38,11 +49,11 @@ module.exports = {
     const todayDate = new Date().toISOString().slice(0, 10);
 
     let rawSetUpdate = `updated_at = '${todayDate}', `;
-    if (req.files.img.length !== 0) {
+    if (req.files.img && req.files.img.length !== 0) {
       console.log("true");
       rawSetUpdate += `img_rcp = '${image}', `;
     }
-    if (req.files.videos.length !== 0) {
+    if (req.files.videos && req.files.videos.length !== 0) {
       console.log("true");
       rawSetUpdate += `video_rcp = '${videos}', `;
     }
@@ -55,12 +66,12 @@ module.exports = {
     console.log(setUpdate);
     recipeByIdModel
       .updateRecipeByid(id, setUpdate)
-      .then(() => {
+      .then((data) => {
         res.status(200).json({
-          status: "success",
-          msg: "Data berhasil diperbaharui",
+          msg: "data berhasil diperbaharui",
           data: body,
-          image: images,
+          image,
+          videos,
         });
       })
       .catch((err) => {
