@@ -3,13 +3,45 @@ const form = require("../Helpers/form");
 
 module.exports = {
   searchRecipe: (req, res) => {
+    const { query } = req;
+    
+    const limit = parseInt(query.limit) || 10; // default 10
+
+    const page  = parseInt(query.page) || 1;
+
+    const offset = (page - 1) * limit;
+
+    const { title } = req.query;
+    let plusQuery = ``;
+    let uriQuery  = ``;
+    let queryLength = Object.keys(req.query).length - 1;
+    if(query.page) {
+      queryLength -= 1;
+    }
+    if (query.limit) {
+      queryLength -= 1;
+    }
+
+    let initial = 0;
+
+    if(Object.keys(req.query).length) {
+      plusQuery += `WHERE `
+      if(title > 0){
+        plusQuery += `title_rcp LIKE '%${title}%' `;
+        uriQuery  += `title_rcp '${title}'` 
+      }
+    }
+      console.log(plusQuery , uriQuery , offset , limit)
     searchModel
-      .searchRecipe(req, query)
-      .then((data) => {
-        form.success(res, data);
+      .searchRecipe(plusQuery)
+      .then((result) => {
+        searchModel.searchRecipe(plusQuery,uriQuery, result[0].total_result , page , offset , limit)
+        .then(data => {
+          res.status(200).json(data);
+        })
       })
       .catch((err) => {
-        form.error(res, err);
+        res.status(500).json(err);
       });
   },
 };
