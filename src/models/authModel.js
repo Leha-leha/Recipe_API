@@ -57,6 +57,7 @@ exports.postLogin = (body) => {
     const { email_user, password_user } = body;
     const qs = "SELECT users.password_user FROM users WHERE email_user=?";
     db.query(qs, email_user, (err, data) => {
+      console.log(qs);
       if (err) {
         reject({
           msg: "Error SQL",
