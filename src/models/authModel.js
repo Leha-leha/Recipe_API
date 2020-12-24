@@ -125,5 +125,65 @@ exports.deleteLogout = (whitelisttoken) => {
         });
       }
     });
+  })
+};
+
+exports.userReset = (body) => {
+  return new Promise((resolve, reject) => {
+    const qs = "SELECT email_user FROM users WHERE id_user = ? ";
+    db.query(qs , [body.id] ,(err , data) => {
+      if (data.length){
+        bcrypt.genSalt(10 , (err , salt) => {
+          if(err){
+            reject(err);
+          }
+          const { password , id } = body;
+          bcrypt.hash(password , salt , (err , hashedPassword) => {
+            if (err) {
+              reject(err);
+            }
+            const querStr = "UPDATE users SET password_user = ?  WHERE id_user = ?";
+            db.query(querStr , [hashedPassword, id], (err , data) => {
+              if(!err){
+                resolve({
+                  msg: "change password success",
+                  data
+                });
+              } else {
+                reject(err);
+              }
+            });
+          });
+        });
+      } else {
+        reject({
+          msg: 'user not found'
+        });
+      }
+    });
   });
 };
+
+exports.sendEmailUser = (body) => {
+  return new Promise((resolve , reject) => {
+    const queryStr = "SELECT id_user , email_user FROM users WHERE email_user = ?";
+    db.query(queryStr , [body.email_user] , (err , data) => {
+      if (err) {
+        reject(err);
+      }
+      if(data.length) {
+        console.log(data)
+        let link = `${process.env.REACT_APP_URL}Confirmation-password?id_user=${data[0].id_user}`
+        resolve({
+          email:data[0].email_user , link : link
+      })
+    } else {
+        reject({
+          msg: 'data not found',
+        });
+      }
+    });
+  });
+};
+
+
