@@ -16,4 +16,23 @@ module.exports = {
         res.json(err);
       });
   },
+
+  getRecipeSave: (req, res) => {
+    savesModel
+      .getRecipeSave(req)
+      .then((data) => {
+        if (data.length) {
+          res.json({
+            data,
+          });
+        } else {
+          res.status(404).json({
+            msg: "Data not Found",
+          });
+        }
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  },
 };
