@@ -4,6 +4,8 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 const mysql = require("mysql");
+// const expressValidator = require("express-validator");
+// const nodemailer = require("nodemailer");
 
 const mainRouter = require("./src/routes/index");
 

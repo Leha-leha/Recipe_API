@@ -3,22 +3,6 @@ const form = require("../helpers/form");
 
 const db = require("../configs/mySQL");
 
-// const whiteListToken = (whiteListToken) => {
-//   return new Promise((resolve, reject) => {
-//     const qs = "INSERT INTO token_whitelist SET ?";
-//     db.query(qs, whiteListToken, (err, data) => {
-//       if (!err) {
-//         resolve({
-//           msg: `Login berhasil`,
-//         });
-//       } else {
-//         reject({
-//           msg: `Login tidak berhasil`,
-//         });
-//       }
-//     });
-//   });
-// };
 
 async function whiteListToken(token) {
   await db.query("INSERT INTO token_whitelist SET token=?", token);
@@ -77,4 +61,50 @@ module.exports = {
         });
     }
   },
+
+  userReset: (req , res) => {
+    authModel
+    .resetPassword(req.body)
+    .then(data => {
+      form.success(res , data);
+    })
+    .catch(err => {
+      form.error(res , err);
+    })
+  },
+  sendEmailUser: (req , res) => {
+    authModel
+    .sendEmailUser(req.body)
+    .then(data => {
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "mghalyramadhan@gmail.com",
+          pass: "ghalymars",
+        },
+      });
+      const mailOptions = {
+        from: "mghalyramadhan@gmail.com",
+        to: data.email,
+        subject: "Reset Password",
+        text: `Link to reset password : ${data.link}`,
+      };
+    
+      transporter.sendMail(mailOptions,(error, info) => {
+        if(error){
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+        form.success(res , data);
+      })
+      .catch(err => {
+        console.log(err)
+        form.err(res , err);
+      });
+    });
+
+  },
+
+
 };
