@@ -14,7 +14,7 @@ module.exports = {
     const { title } = req.query;
     let plusQuery = ``;
     let uriQuery  = ``;
-    let queryLength = Object.keys(req.query).length - 1;
+    let queryLength = Object.keys(req.query).length;
     if(query.page) {
       queryLength -= 1;
     }
@@ -22,20 +22,20 @@ module.exports = {
       queryLength -= 1;
     }
 
-    let initial = 0;
+    console.log(queryLength, title)
 
-    if(Object.keys(req.query).length) {
-      plusQuery += `WHERE `
-      if(title > 0){
-        plusQuery += `title_rcp LIKE '%${title}%' `;
-        uriQuery  += `title_rcp '${title}'` 
+    if(queryLength) {
+      if(req.query.title){
+        plusQuery += ` WHERE title_rcp LIKE '%${req.query.title}%' `;
+        uriQuery  += `title_rcp='${title}'` 
       }
     }
-      console.log(plusQuery , uriQuery , offset , limit)
+      console.log('a'+plusQuery,'b'+uriQuery,  'd'+page , 'e'+offset , 'f'+limit)
+      console.log(searchModel) 
     searchModel
-      .searchRecipe(plusQuery)
+      .searchTotalResult(plusQuery)
       .then((result) => {
-        searchModel.searchRecipe(plusQuery,uriQuery, result[0].total_result , page , offset , limit)
+        searchModel.searchRecipes(plusQuery,uriQuery, result[0].total_result , page , offset , limit) 
         .then(data => {
           res.status(200).json(data);
         })
