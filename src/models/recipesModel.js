@@ -20,6 +20,26 @@ exports.getAllRecipesModel = (req) => {
   });
 };
 
+exports.getAllRecipesByUserId = (req) => {
+  const { id } = req.params;
+  return new Promise((resolve, reject) => {
+    const qs =
+      "SELECT r.title_rcp, r.img_rcp FROM recipes as r WHERE id_user = ? ORDER BY created_at DESC";
+    db.query(qs, id, (err, data) => {
+      if (data.length == 0) {
+        reject({
+          msg: "data tidak tersedia",
+        });
+      }
+      if (!err) {
+        resolve(data);
+      } else {
+        reject(err);
+      }
+    });
+  });
+};
+
 exports.postNewRecipe = (req) => {
   // mendapat objek request dari client
   // melakukan query ke db

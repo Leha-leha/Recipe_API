@@ -13,6 +13,19 @@ module.exports = {
       });
   },
 
+  getAllRecipesById: (req, res) => {
+    recipesModel
+      .getAllRecipesByUserId(req)
+      .then((data) => {
+        res.json({
+          data,
+        });
+      })
+      .catch((err) => {
+        form.error(res, err);
+      });
+  },
+
   postNewRecipeCtrl: (req, res) => {
     const image = JSON.stringify(
       req.files.img.map((e) => process.env.SERVER + "/images/" + e.filename)

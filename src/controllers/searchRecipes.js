@@ -2,12 +2,12 @@ const searchModel = require("../models/searchRecipes");
 const form = require("../Helpers/form");
 
 module.exports = {
-  searchRecipe: (req, res) => {
+  searchRecipes: (req, res) => {
     const { query } = req;
     
-    const limit = parseInt(query.limit) || 10; // default 10
+    const limit = Number(query.limit) || 10; // default 10
 
-    const page  = parseInt(query.page) || 1;
+    const page  = Number(query.page) || 1;
 
     const offset = (page - 1) * limit;
 
