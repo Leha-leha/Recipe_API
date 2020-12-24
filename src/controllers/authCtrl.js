@@ -33,7 +33,7 @@ module.exports = {
     authModel
       .postLogin(body)
       .then(async (data) => {
-        await whiteListToken(data);
+        await whiteListToken(data.token);
         form.success(res, data);
       })
       .catch((err) => {

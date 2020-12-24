@@ -55,7 +55,8 @@ exports.postLogin = (body) => {
       });
     }
     const { email_user, password_user } = body;
-    const qs = "SELECT users.password_user FROM users WHERE email_user=?";
+    const qs =
+      "SELECT users.password_user, users.id_user FROM users WHERE email_user=?";
     db.query(qs, email_user, (err, data) => {
       console.log(qs);
       if (err) {
@@ -97,7 +98,12 @@ exports.postLogin = (body) => {
             };
             const secret = process.env.SECRET_KEY;
             const token = jwt.sign(payload, secret);
-            resolve(token);
+            const idUser = data[0].id_user;
+            const objUserLogin = {
+              token: token,
+              userId: idUser,
+            };
+            resolve(objUserLogin);
           }
         });
       }
