@@ -4,7 +4,7 @@ const form = require("../Helpers/form");
 exports.getAllRecipesModel = (req) => {
   return new Promise((resolve, reject) => {
     const qs =
-      "SELECT r.title_rcp, r.img_rcp FROM recipes as r ORDER BY created_at DESC";
+      "SELECT r.title_rcp, r.id_user, r.img_rcp, r.desc_rcp FROM recipes as r ORDER BY created_at DESC";
     db.query(qs, (err, receipes) => {
       if (receipes.length == 0) {
         reject({
