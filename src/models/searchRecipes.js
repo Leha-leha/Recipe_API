@@ -1,28 +1,42 @@
 const db = require("../Configs/mySQL");
 const form = require("../Helpers/form");
 
-exports.searchRecipes = (plusQuery , uriQuery , total_result , page , offset , limit) => {
-    return new Promise((resolve , reject) => {
-        const qs = `SELECT r.id_rcp, r.title_rcp, r.img_rcp   FROM recipes as r ` + plusQuery + `LIMIT ${limit} OFFSET ${offset}`
-        console.log(uriQuery)
-        db.query(qs  , (err , data) => {
-            if(!err){
-                if (data.length){
-                    newData = {
-                        recipe: data,
-                        pageInfo: {
-                            result: total_result,
-                            totalPage:total_result%limit === 0 ? total_result/limit : Math.floor(total_result/limit) + 1,
-                            currentPage: page || 1,
-                            previousPage: page === 1 ? null : `/search${uriQuery}&page=${page - 1}&limit=${limit}`,
-                        nextPage: total_result-(offset+limit) < 0 ? null : `search${uriQuery}&page=${page + 1}$limit=${limit}`
-                        }
-                    }
-                }
-                resolve(newData)
-            } else {
-                reject(err)
-            }
-        })
-    })
-}
+module.exports = {
+  searchRecipe: (plusQuery, uriQuery, total_result, page, offset, limit) => {
+    return new Promise((resolve, reject) => {
+      const qs =
+        `SELECT r.id_rcp, r.title_rcp, r.img_rcp   FROM recipes as r ` +
+        plusQuery +
+        `LIMIT ${limit} OFFSET ${offset}`;
+      console.log(uriQuery);
+      db.query(qs, (err, data) => {
+        if (!err) {
+          if (data.length) {
+            newData = {
+              recipe: data,
+              pageInfo: {
+                result: total_result,
+                totalPage:
+                  total_result % limit === 0
+                    ? total_result / limit
+                    : Math.floor(total_result / limit) + 1,
+                currentPage: page || 1,
+                previousPage:
+                  page === 1
+                    ? null
+                    : `/search${uriQuery}&page=${page - 1}&limit=${limit}`,
+                nextPage:
+                  total_result - (offset + limit) < 0
+                    ? null
+                    : `search${uriQuery}&page=${page + 1}$limit=${limit}`,
+              },
+            };
+          }
+          resolve(newData);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  },
+};
