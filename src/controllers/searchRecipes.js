@@ -38,6 +38,10 @@ module.exports = {
         searchModel.searchRecipes(plusQuery,uriQuery, result[0].total_result , page , offset , limit) 
         .then(data => {
           res.status(200).json(data);
+        }).catch(() => {
+          res.status(404).json({
+            msg: `${title} not found`
+          });
         })
       })
       .catch((err) => {
