@@ -3,7 +3,6 @@ const form = require("../helpers/form");
 
 const db = require("../configs/mySQL");
 
-
 async function whiteListToken(token) {
   await db.query("INSERT INTO token_whitelist SET token=?", token);
 }
@@ -43,7 +42,6 @@ module.exports = {
 
   logout: (req, res) => {
     const bearerToken = req.header("x-access-token");
-    console.log(req.headers);
     if (!bearerToken) {
       res.json({
         msg: `token null!`,
@@ -62,20 +60,18 @@ module.exports = {
     }
   },
 
-  userReset: (req , res) => {
+  userReset: (req, res) => {
     authModel
-    .resetPassword(req.body)
-    .then(data => {
-      form.success(res , data);
-    })
-    .catch(err => {
-      form.error(res , err);
-    })
+      .resetPassword(req.body)
+      .then((data) => {
+        form.success(res, data);
+      })
+      .catch((err) => {
+        form.error(res, err);
+      });
   },
-  sendEmailUser: (req , res) => {
-    authModel
-    .sendEmailUser(req.body)
-    .then(data => {
+  sendEmailUser: (req, res) => {
+    authModel.sendEmailUser(req.body).then((data) => {
       let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -89,22 +85,20 @@ module.exports = {
         subject: "Reset Password",
         text: `Link to reset password : ${data.link}`,
       };
-    
-      transporter.sendMail(mailOptions,(error, info) => {
-        if(error){
-          console.log(error);
-        } else {
-          console.log("Email sent: " + info.response);
-        }
-        form.success(res , data);
-      })
-      .catch(err => {
-        console.log(err)
-        form.err(res , err);
-      });
+
+      transporter
+        .sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("Email sent: " + info.response);
+          }
+          form.success(res, data);
+        })
+        .catch((err) => {
+          console.log(err);
+          form.err(res, err);
+        });
     });
-
   },
-
-
 };

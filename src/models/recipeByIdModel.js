@@ -21,8 +21,6 @@ module.exports = {
     console.log(setUpdate);
     return new Promise((resolve, reject) => {
       const qs = "UPDATE recipes SET " + setUpdate + " WHERE id_rcp = ?";
-      console.log("promise");
-      console.log(qs);
       db.query(qs, id, (err, data) => {
         if (!err) {
           resolve(data);
