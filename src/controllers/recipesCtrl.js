@@ -27,9 +27,11 @@ module.exports = {
   },
 
   postNewRecipeCtrl: (req, res) => {
+    // console.log(req.files)
     const image = JSON.stringify(
       req.files.img.map((e) => process.env.SERVER + "/images/" + e.filename)
     );
+    // return res.send(req.files)
     const videos = JSON.stringify(
       req.files.videos.map((e) => process.env.SERVER + "/videos/" + e.filename)
     );
