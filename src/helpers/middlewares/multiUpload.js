@@ -4,22 +4,20 @@ const form = require("../form");
 
 const multerStorage = multer.diskStorage({
   destination: function (_, file, cb) {
-    if(
-      file.mimetype === "image/png"  ||
-      file.mimetype === "image/jpg"  ||
-      file.mimetype === "image/gif"  ||
-      file.mimetype === "image/jpeg" 
-    )
-    {
-      cb(null, "./public/images")
+    if (
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/gif" ||
+      file.mimetype === "image/jpeg"
+    ) {
+      cb(null, "./public/images");
     } else if (
-      file.mimetype === "video/mp4"  ||
-      file.mimetype === "video/3gp"  ||
-      file.mimetype === "video/mkv"  ||
-      file.mimetype === "video/mpeg" 
-    )
-    {
-      cb(null, "./public/videos")
+      file.mimetype === "video/mp4" ||
+      file.mimetype === "video/3gp" ||
+      file.mimetype === "video/mkv" ||
+      file.mimetype === "video/mpeg"
+    ) {
+      cb(null, "./public/videos");
     }
   },
   filename: function (_, file, cb) {
@@ -29,29 +27,27 @@ const multerStorage = multer.diskStorage({
     const nameVideo = `video-${Date.now()}-${file.fieldname}${path.extname(
       file.originalname
     )}`;
-    if(
-      file.mimetype === "image/png"  ||
-      file.mimetype === "image/jpg"  ||
-      file.mimetype === "image/gif"  ||
-      file.mimetype === "image/jpeg" 
-    )
-    {
-      cb(null, nameImage)
+    if (
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/gif" ||
+      file.mimetype === "image/jpeg"
+    ) {
+      cb(null, nameImage);
     } else if (
-      file.mimetype === "video/mp4"  ||
-      file.mimetype === "video/3gp"  ||
-      file.mimetype === "video/mkv"  ||
-      file.mimetype === "video/mpeg" 
-    )
-    {
-      cb(null, nameVideo)
+      file.mimetype === "video/mp4" ||
+      file.mimetype === "video/3gp" ||
+      file.mimetype === "video/mkv" ||
+      file.mimetype === "video/mpeg"
+    ) {
+      cb(null, nameVideo);
     }
   },
 });
 const upload = multer({
   storage: multerStorage,
   limits: { fileSize: 200 * 1000 * 1000 }, // 200 MB
-})
+});
 const multiUpload = (req, res, next) => {
   //fields
   var cpUpload = upload.fields([
@@ -66,7 +62,7 @@ const multiUpload = (req, res, next) => {
         err,
       });
     } else {
-      console.log('next Step')
+      console.log("next Step");
       next();
     }
   });
