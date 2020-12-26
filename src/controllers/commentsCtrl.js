@@ -17,4 +17,18 @@ module.exports = {
         res.json(err);
       });
   },
+
+  getCommentByRecipeCtrl: (req, res) => {
+    const { id } = req.params;
+    commentsModel
+      .getComment(id)
+      .then((data) => {
+        res.status(200).json({
+          comment: data,
+        });
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  },
 };
