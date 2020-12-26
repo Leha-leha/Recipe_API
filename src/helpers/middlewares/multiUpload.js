@@ -24,9 +24,7 @@ const multerStorage = multer.diskStorage({
     const nameImage = `image-${Date.now()}-${file.fieldname}${path.extname(
       file.originalname
     )}`;
-    const nameVideo = `video-${Date.now()}-${file.fieldname}${path.extname(
-      file.originalname
-    )}`;
+    const nameVideo = `video-${Date.now()}-${file.originalname}`;
     if (
       file.mimetype === "image/png" ||
       file.mimetype === "image/jpg" ||
