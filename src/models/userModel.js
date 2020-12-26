@@ -16,4 +16,18 @@ module.exports = {
       });
     });
   },
+
+  updateUserByid: (id, setUpdate) => {
+    console.log(setUpdate);
+    return new Promise((resolve, reject) => {
+      const qs = "UPDATE users SET " + setUpdate + " WHERE id_user = ?";
+      db.query(qs, id, (err, data) => {
+        if (!err) {
+          resolve(data);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  },
 };

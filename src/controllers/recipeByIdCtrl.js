@@ -12,7 +12,7 @@ module.exports = {
             data,
           });
         } else {
-          res.status(404).json({
+          res.status(200).json({
             msg: "Data not Found",
           });
         }
