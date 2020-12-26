@@ -36,8 +36,8 @@ module.exports = {
       req.files.videos.map((e) => process.env.SERVER + "/videos/" + e.filename)
     );
     const { body } = req;
-    console.log(body);
-    console.log(req.files);
+    // console.log(body);
+    // console.log(req.files);
     const insertBody = {
       ...body,
       created_at: new Date(Date.now()),
