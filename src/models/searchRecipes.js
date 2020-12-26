@@ -7,8 +7,8 @@ module.exports ={
             const qs = `SELECT r.id_rcp, r.title_rcp, r.img_rcp FROM recipes as r ` + plusQuery + `LIMIT ${limit} OFFSET ${offset}`
             console.log(uriQuery)
             db.query(qs  , (err , data) => {
-                if(!err){  
-                    if (data.length){
+                 
+                    if (data.length !== 0){
                         newData = {
                             recipe: data,
                             pageInfo: {
@@ -19,9 +19,9 @@ module.exports ={
                             nextPage: total_result-(offset+limit) < 0 ? null : `search${uriQuery}&page=${page + 1}$limit=${limit}`
                             }
                         }
-                    }
                     resolve(newData)
-                } else {
+                    }
+                else {
                     reject(err)
                 }
             })
@@ -32,19 +32,13 @@ module.exports ={
             const qs = `SELECT COUNT(title_rcp) as total_result from recipes` + plusQuery 
             db.query(qs, (err, data) => {
                 if(!err){
-                    if(!data[0]){
-                        reject({
-                            message: `Data not found`
-                        })
-                    }else{
-                        console.log(data[0])
+                   
                         resolve(data)
                     }
-                }else{
+                else{
                     reject(err)
                 }
             })
         })
     }
 }
-s

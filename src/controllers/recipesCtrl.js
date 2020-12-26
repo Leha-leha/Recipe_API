@@ -28,10 +28,10 @@ module.exports = {
 
   postNewRecipeCtrl: (req, res) => {
     const image = JSON.stringify(
-      req.files.img.map((e) => process.env.SERVER + "/images/" + e.filename)
+      req.files.img.map((e) => process.env.SERVER + "/images/" + e.filename + " ")
     );
     const videos = JSON.stringify(
-      req.files.videos.map((e) => process.env.SERVER + "/videos/" + e.filename)
+      req.files.videos.map((e) => process.env.SERVER + "/videos/" + e.filename + " ")
     );
     const { body } = req;
     console.log(body);
