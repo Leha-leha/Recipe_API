@@ -37,4 +37,21 @@ module.exports = {
         res.json(err);
       });
   },
+
+  unLikeCtrl: (req, res) => {
+    likesModel
+      .unLike(req)
+      .then((data) => {
+        res.json({
+          msg: "Unlike Success",
+          data,
+        });
+      })
+      .catch((err) => {
+        res.json({
+          msg: "Unlike Failed",
+          err,
+        });
+      });
+  },
 };

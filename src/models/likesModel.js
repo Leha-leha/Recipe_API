@@ -27,3 +27,19 @@ exports.getRecipeLike = (req) => {
     });
   });
 };
+
+exports.unLike = (req) => {
+  console.log(req.body);
+  const recipe_id = req.body.recipe_id;
+  const user_id = req.body.user_id;
+  return new Promise((resolve, reject) => {
+    const qs = "DELETE FROM likes WHERE recipe_id = ? AND user_id = ?";
+    db.query(qs, [recipe_id, user_id], (err, data) => {
+      if (!err) {
+        resolve(data);
+      } else {
+        reject(err);
+      }
+    });
+  });
+};
