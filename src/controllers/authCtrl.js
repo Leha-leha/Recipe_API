@@ -2,9 +2,14 @@ const authModel = require("../models/authModel");
 const form = require("../helpers/form");
 
 const db = require("../configs/mySQL");
+const nodemailer = require("nodemailer");
 
 async function whiteListToken(token) {
   await db.query("INSERT INTO token_whitelist SET token=?", token);
+}
+
+async function deleteOtp(otp) {
+  await db.query("DELETE FROM tb_otp WHERE otp=?", otp);
 }
 
 module.exports = {
@@ -38,6 +43,19 @@ module.exports = {
       .catch((err) => {
         form.error(res, err);
       });
+  },
+
+  otpLogin: (req, res) => {
+    const { body } = req;
+    authModel.postOtp(body)
+      .then(async (data) => {
+      console.log(data[0].otp)
+      await deleteOtp(data[0].otp);
+      form.success(res, data);
+    })
+      .catch((err) => {
+      form.error(res, err);
+    });
   },
 
   logout: (req, res) => {
@@ -75,12 +93,12 @@ module.exports = {
       let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "mghalyramadhan@gmail.com",
-          pass: "ghalymars",
+          user: process.env.EMAIL,
+          pass: process.env.PASS_EMAIL,
         },
       });
       const mailOptions = {
-        from: "mghalyramadhan@gmail.com",
+        from: "mochammadghaly@gmail.com",
         to: data.email,
         subject: "Reset Password",
         text: `Link to reset password : ${data.link}`,
@@ -96,8 +114,7 @@ module.exports = {
           form.success(res, data);
         })
         .catch((err) => {
-          console.log(err);
-          form.err(res, err);
+          form.error(res, err);
         });
     });
   },
