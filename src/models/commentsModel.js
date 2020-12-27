@@ -13,7 +13,7 @@ exports.postNewComment = (body) => {
   });
 };
 
-exports.deleteComment = () => {
+exports.deleteComment = (id) => {
   return new Promise((resolve, reject) => {
     const qs = "DELETE FROM comments WHERE id = ?";
     db.query(qs, id, (err, data) => {

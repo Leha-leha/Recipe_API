@@ -31,4 +31,22 @@ module.exports = {
         res.json(err);
       });
   },
+
+  deleteCommentById: (req, res) => {
+    const { id } = req.params;
+    commentsModel
+      .deleteComment(id)
+      .then((data) => {
+        res.status(200).json({
+          msg: "delete comment berhasil",
+          data,
+        });
+      })
+      .catch((err) => {
+        res.json({
+          msg: "gagal delete",
+          err,
+        });
+      });
+  },
 };
