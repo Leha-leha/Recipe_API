@@ -13,7 +13,9 @@ module.exports = {
         res.status(200).json(resObject);
       })
       .catch((err) => {
-        res.json(err);
+        res.json({
+          msg: "You already save",
+        });
       });
   },
 

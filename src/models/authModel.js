@@ -125,31 +125,30 @@ exports.deleteLogout = (whitelisttoken) => {
         });
       }
     });
-  })
+  });
 };
-
-
 
 exports.userReset = (body) => {
   return new Promise((resolve, reject) => {
     const qs = "SELECT email_user FROM users WHERE id_user = ? ";
-    db.query(qs , [body.id] ,(err , data) => {
-      if (data.length !== 0){
-        bcrypt.genSalt(10 , (err , salt) => {
-          if(err){
+    db.query(qs, [body.id], (err, data) => {
+      if (data.length !== 0) {
+        bcrypt.genSalt(10, (err, salt) => {
+          if (err) {
             reject(err);
           }
-          const { password_user , id_user } = body;
-          bcrypt.hash(password_user , salt , (err , hashedPassword) => {
+          const { password_user, id_user } = body;
+          bcrypt.hash(password_user, salt, (err, hashedPassword) => {
             if (err) {
               reject(err);
             }
-            const queryStr = "UPDATE users SET password_user = ?  WHERE id_user = ?";
-            db.query(queryStr , [hashedPassword, id_user], (err , data) => {
-              if(!err){
+            const queryStr =
+              "UPDATE users SET password_user = ?  WHERE id_user = ?";
+            db.query(queryStr, [hashedPassword, id_user], (err, data) => {
+              if (!err) {
                 resolve({
                   msg: "change password success",
-                  data
+                  data,
                 });
               } else {
                 reject(err);
@@ -159,7 +158,7 @@ exports.userReset = (body) => {
         });
       } else {
         reject({
-          msg: 'user not found'
+          msg: "user not found",
         });
       }
     });
@@ -171,35 +170,40 @@ async function saveOtp(otp) {
 }
 
 exports.sendEmailUser = (body) => {
-  return new Promise((resolve , reject) => {
-    const queryStr = "SELECT id_user , email_user FROM users WHERE email_user = ?";
-    db.query(queryStr , [body.email_user] , (err , data) => {
+  return new Promise((resolve, reject) => {
+    const queryStr =
+      "SELECT id_user , email_user FROM users WHERE email_user = ?";
+    db.query(queryStr, [body.email_user], (err, data) => {
       if (err) {
         reject(err);
       }
-      if(data.length !== 0) {
-        console.log(data[0])
+      console.log(data.email_user);
+      if (data.length !== 0) {
+        console.log(data[0]);
         function generateOTP() {
-          var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          var string =
+            "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
           let OTP = "";
           var len = string.length;
-          for (let i = 0; i < 6; i++ ) {
+          for (let i = 0; i < 6; i++) {
             OTP += string[Math.floor(Math.random() * len)];
           }
           return OTP;
-        };
+        }
         let otp = generateOTP();
         console.log(otp);
-        localStorage.setItem("userId", data[0].id_user);
+        //localStorage.setItem("userId", data[0].id_user);
         saveOtp(otp);
 
         // let link = `${process.env.REACT_APP_URL}/Confirmation-password?id_user=${data[0].id_user}`
         resolve({
-          email:data[0].email_user , link : otp,
-      })
-    } else {
+          email: data[0].email_user,
+          link: otp,
+          userId: data[0].id_user,
+        });
+      } else {
         reject({
-          msg: 'data not found',
+          msg: "data not found",
         });
       }
     });
@@ -219,8 +223,7 @@ exports.postOtp = (body) => {
       });
     }
     const { otp } = body;
-    const qs =
-      "SELECT otp FROM tb_otp WHERE otp = ?";
+    const qs = "SELECT otp FROM tb_otp WHERE otp = ?";
     db.query(qs, otp, (err, data) => {
       console.log(qs);
       if (err) {
@@ -241,9 +244,9 @@ exports.postOtp = (body) => {
           msg: "OTP Not Found",
           status: 404,
         });
-      } else { resolve(data) }
+      } else {
+        resolve(data);
+      }
     });
   });
 };
-
-
