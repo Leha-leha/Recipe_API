@@ -22,7 +22,7 @@ exports.getRecipeLike = (req) => {
       if (!err) {
         resolve(data);
       } else {
-        reject(errr);
+        reject(err);
       }
     });
   });

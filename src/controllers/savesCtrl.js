@@ -37,4 +37,21 @@ module.exports = {
         res.json(err);
       });
   },
+
+  unSaveCtrl: (req, res) => {
+    savesModel
+      .unSave(req)
+      .then((data) => {
+        res.json({
+          msg: "Unsave Success",
+          data,
+        });
+      })
+      .catch((err) => {
+        res.json({
+          msg: "Unsave Failed",
+          err,
+        });
+      });
+  },
 };

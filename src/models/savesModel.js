@@ -22,7 +22,22 @@ exports.getRecipeSave = (req) => {
       if (!err) {
         resolve(data);
       } else {
-        reject(errr);
+        reject(err);
+      }
+    });
+  });
+};
+
+exports.unSave = (req) => {
+  const recipe_id = req.params.id;
+  const user_id = req.body.user_id;
+  return new Promise((resolve, reject) => {
+    const qs = "DELETE FROM saves WHERE recipe_id = ? AND user_id = ?";
+    db.query(qs, [recipe_id, user_id], (err, data) => {
+      if (!err) {
+        resolve(data);
+      } else {
+        reject(err);
       }
     });
   });

@@ -4,6 +4,6 @@ const savedCtrl = require("../controllers/savesCtrl");
 
 savedRouter.post("/", savedCtrl.postNewSavesCtrl);
 savedRouter.get("/:id", savedCtrl.getRecipeSave);
-// savedRouter.delete("/", likesCtrl.unLikeCtrl);
+savedRouter.delete("/:id", savedCtrl.unSaveCtrl); //params recipe id
 
 module.exports = savedRouter;
