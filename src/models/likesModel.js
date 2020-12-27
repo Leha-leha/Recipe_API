@@ -7,7 +7,7 @@ exports.postNewLike = (body) => {
       if (!err) {
         resolve(data);
       } else {
-        reject(errr);
+        reject(err);
       }
     });
   });
