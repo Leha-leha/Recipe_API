@@ -41,16 +41,6 @@ module.exports = {
     searchModel
       .searchTotalResult(plusQuery)
       .then((result) => {
-<<<<<<< HEAD
-        searchModel.searchRecipes(plusQuery,uriQuery, result[0].total_result , page , offset , limit) 
-        .then(data => {
-          res.status(200).json(data);
-        }).catch(() => {
-          res.status(404).json({
-            msg: `${title} not found`
-          });
-        })
-=======
         searchModel
           .searchRecipes(
             plusQuery,
@@ -68,7 +58,6 @@ module.exports = {
               msg: `${title} not found`,
             });
           });
->>>>>>> 49cc87ef5b18cf8d075e1a5e6e4936270a6cf38e
       })
       .catch((err) => {
         res.status(500).json(err);
