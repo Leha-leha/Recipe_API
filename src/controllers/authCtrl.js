@@ -47,15 +47,16 @@ module.exports = {
 
   otpLogin: (req, res) => {
     const { body } = req;
-    authModel.postOtp(body)
+    authModel
+      .postOtp(body)
       .then(async (data) => {
-      console.log(data[0].otp)
-      await deleteOtp(data[0].otp);
-      form.success(res, data);
-    })
+        console.log(data[0].otp);
+        await deleteOtp(data[0].otp);
+        form.success(res, data);
+      })
       .catch((err) => {
-      form.error(res, err);
-    });
+        form.error(res, err);
+      });
   },
 
   logout: (req, res) => {
@@ -89,33 +90,38 @@ module.exports = {
       });
   },
   sendEmailUser: (req, res) => {
-    authModel.sendEmailUser(req.body).then((data) => {
-      let transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.PASS_EMAIL,
-        },
-      });
-      const mailOptions = {
-        from: "mochammadghaly@gmail.com",
-        to: data.email,
-        subject: "Reset Password",
-        text: `Link to reset password : ${data.link}`,
-      };
-
-      transporter
-        .sendMail(mailOptions, (error, info) => {
+    console.log(req.body);
+    authModel
+      .sendEmailUser(req.body)
+      .then(async (data) => {
+        //form.success(res, data);
+        let transporter = await nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASS_EMAIL,
+          },
+        });
+        const mailOptions = {
+          from: "hendra.solih.jp@gmail.com",
+          to: data.email,
+          subject: "Reset Password",
+          text: `Link to reset password : ${data.link}`,
+        };
+        await transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
             console.log(error);
           } else {
             console.log("Email sent: " + info.response);
           }
-          form.success(res, data);
-        })
-        .catch((err) => {
-          form.error(res, err);
+          // res.json({
+          //   test: "test",
+          // });
         });
-    });
+        form.success(res, data.userId);
+      })
+      .catch((err) => {
+        form.error(res, err);
+      });
   },
 };

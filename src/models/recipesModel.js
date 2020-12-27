@@ -24,7 +24,7 @@ exports.getAllRecipesByUserId = (req) => {
   const { id } = req.params;
   return new Promise((resolve, reject) => {
     const qs =
-      "SELECT r.title_rcp, r.img_rcp FROM recipes as r WHERE id_user = ? ORDER BY created_at DESC";
+      "SELECT r.title_rcp, r.img_rcp, r.id_rcp FROM recipes as r WHERE id_user = ? ORDER BY created_at DESC";
     db.query(qs, id, (err, data) => {
       if (data.length == 0) {
         reject({
