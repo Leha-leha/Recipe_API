@@ -21,7 +21,7 @@ const multerStorage = multer.diskStorage({
     }
   },
   filename: function (_, file, cb) {
-    const nameImage = `image-${Date.now()}-${file.fieldname}${path.extname(
+    const nameImage = `image-${Date.now()}-${file.originalname}${path.extname(
       file.originalname
     )}`;
     const nameVideo = `video-${Date.now()}-${file.originalname}`;
