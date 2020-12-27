@@ -4,6 +4,6 @@ const commentsCtrl = require("../controllers/commentsCtrl");
 
 commentsRouter.get("/:id", commentsCtrl.getCommentByRecipeCtrl);
 commentsRouter.post("/", commentsCtrl.postNewCommentCtrl);
-//commentsRouter.delete("/", recipeByIdCtrl.getRecipeById);
+// commentsRouter.delete("/:id", recipeByIdCtrl.getRecipeById);
 
 module.exports = commentsRouter;
