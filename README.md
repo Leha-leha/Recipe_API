@@ -7,7 +7,17 @@ This is Repository for API Web Food Recipe. For frontend section you can find [h
 For our backend API we use Javascript as main programming language with [Node Js](https://nodejs.org/en/) for environment.
 This API uses a number of open source projects to work properly:
 
-* [Express]
+* Express JS 
+* MySql 
+* bcrypt 
+* jasonwebtoken 
+* body-parser
+* cors
+* morgan
+* multer
+* nodemailer
+* nodemon
+* dotenv
 
 
 Sudah bisa digunakan dengan npm
