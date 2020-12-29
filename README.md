@@ -48,13 +48,25 @@ HTTP GET
 /recipes
 ```
 
-GET A Product
+GET Recipe
 
 ```sh
-HTTP
-http://localhost:8000/product/:id
+HTTP GET
+/recipe/:id
 ```
 
+EDIT Recipe
+
 ```sh
-For more information about this API, you can visit my api documentation on https://documenter.getpostman.com/view/12314857/TVewY4G8
+HTTP PATCH
+/recipe/:id
 ```
+
+DELETE Recipe
+
+```sh
+HTTP DELETE
+/recipe/:id
+```
+
+For more information about this API, you can visit our API documentation on [Here](https://web.postman.co/collections/12314857-78b062b5-d9ce-4d8a-9489-cdcbbb2a39f1/publish?workspace=56b63656-03c2-4055-8918-7a6ce26ff5d6)
