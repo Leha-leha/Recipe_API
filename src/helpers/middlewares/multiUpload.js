@@ -32,12 +32,7 @@ const multerStorage = multer.diskStorage({
       file.mimetype === "image/jpeg"
     ) {
       cb(null, nameImage);
-    } else if (
-      file.mimetype === "video/mp4" ||
-      file.mimetype === "video/3gp" ||
-      file.mimetype === "video/mkv" ||
-      file.mimetype === "video/mpeg"
-    ) {
+    } else if (file.mimetype === "video/mp4") {
       cb(null, nameVideo);
     }
   },
