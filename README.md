@@ -64,9 +64,10 @@ HTTP PATCH
 
 DELETE Recipe
 
-```sh
+````sh
 HTTP DELETE
 /recipe/:id
-```
+```GIT
 
 For more information about this API, you can visit our API documentation on [Here](https://web.postman.co/collections/12314857-78b062b5-d9ce-4d8a-9489-cdcbbb2a39f1/publish?workspace=56b63656-03c2-4055-8918-7a6ce26ff5d6)
+````
