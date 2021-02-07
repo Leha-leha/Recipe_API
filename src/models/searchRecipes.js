@@ -1,4 +1,4 @@
-const db = require("../Configs/mySQL");
+const db = require("../configs/mySQL");
 // const form = require("../Helpers/form");
 
 module.exports ={

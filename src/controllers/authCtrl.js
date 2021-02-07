@@ -103,7 +103,7 @@ module.exports = {
           },
         });
         const mailOptions = {
-          from: "hendra.solih.jp@gmail.com",
+          from: "mochammadghaly@gmail.com",
           to: data.email,
           subject: "Reset Password",
           text: `Link to reset password : ${data.link}`,

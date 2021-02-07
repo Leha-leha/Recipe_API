@@ -1,5 +1,5 @@
 const db = require("../configs/mySQL");
-const form = require("../Helpers/form");
+const form = require("../helpers/form");
 
 exports.getAllRecipesModel = (req) => {
   return new Promise((resolve, reject) => {
