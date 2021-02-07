@@ -54,4 +54,20 @@ module.exports = {
         });
       });
   },
+
+  getSaveCtrl: (req, res) => {
+    savesModel
+      .getSave(req)
+      .then((data) => {
+        res.json({
+          data,
+        });
+      })
+      .catch((err) => {
+        res.json({
+          msg: "get save error",
+          err,
+        });
+      });
+  },
 };

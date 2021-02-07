@@ -42,3 +42,18 @@ exports.unSave = (req) => {
     });
   });
 };
+
+exports.getSave = (req) => {
+  const recipe_id = req.params.idrecipe;
+  const user_id = req.params.iduser;
+  return new Promise((resolve, reject) => {
+    const qs = "SELECT * FROM saves WHERE recipe_id = ? AND user_id = ?";
+    db.query(qs, [recipe_id, user_id], (err, data) => {
+      if (!err) {
+        resolve(data);
+      } else {
+        reject(err);
+      }
+    });
+  });
+};

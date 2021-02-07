@@ -54,4 +54,20 @@ module.exports = {
         });
       });
   },
+
+  getLikeCtrl: (req, res) => {
+    likesModel
+      .getLike(req)
+      .then((data) => {
+        res.json({
+          data,
+        });
+      })
+      .catch((err) => {
+        res.json({
+          msg: "get like error",
+          err,
+        });
+      });
+  },
 };
