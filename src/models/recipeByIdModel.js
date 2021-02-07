@@ -6,7 +6,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const qs = "SELECT * FROM recipes WHERE id_rcp = ?";
       db.query(qs, id, (err, data) => {
-        console.log(id);
+        //console.log(id);
         // console.log(level);
         if (!err) {
           resolve(data);

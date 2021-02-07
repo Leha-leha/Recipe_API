@@ -3,7 +3,7 @@ const form = require("../helpers/form");
 
 module.exports = {
   getRecipeById: (req, res) => {
-    console.log(req.headers);
+    //console.log(req.headers);
     recipeByIdModel
       .getRecipeById(req)
       .then((data) => {
