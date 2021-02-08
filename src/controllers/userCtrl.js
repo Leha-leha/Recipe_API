@@ -27,9 +27,7 @@ module.exports = {
     // }
     let image = null;
     if (req.files.img) {
-      image = JSON.stringify(
-        req.files.img.map((e) => process.env.SERVER + "/images/" + e.filename)
-      );
+      image = JSON.stringify(req.files.img.map((e) => "/images/" + e.filename));
     }
     console.log(image);
     const { body } = req;
