@@ -33,7 +33,7 @@ module.exports = {
     );
     // return res.send(req.files)
     const videos = JSON.stringify(
-      req.files.videos.map((e) => "/videos/" + e.filename + " ")
+      req.files.videos.map((e) => "/videos/" + e.filename)
     );
     const { body } = req;
     // console.log(body);
